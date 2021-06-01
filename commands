@@ -1,0 +1,11 @@
+Database
+php artisan make:model Theatre -m
+php artisan migrate
+php artisan migrate:reset
+php artisan migrate:refresh
+
+If nothing to migrate -> php artisan migrate:rollback
+
+php artisan make:factory TheatreFactory --model=Theatre
+
+php artisan make:controller TheatreController --recsource
