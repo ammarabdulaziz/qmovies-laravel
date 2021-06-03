@@ -17,6 +17,7 @@ class CreateTheatresTable extends Migration
             $table->increments('theatre_id');
             $table->string('name');
             $table->string('location');
+            $table->integer('screens');
             $table->timestamps();
         });
 
