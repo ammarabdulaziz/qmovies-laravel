@@ -1,9 +1,11 @@
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-@extends('backend/layouts.app')
+@extends('backend.layouts.app')
 
 @section('content')
+
+    @include('backend.layouts.datatableHead')
 
     <!-- start page title -->
     <div class="row">
@@ -26,7 +28,7 @@
 
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h4 class="card-title">LIST</h4>
-                                <a href="/theatres/add" class="btn btn-success">ADD</a>
+                                <a href="/theatres/create" class="btn btn-success">ADD</a>
                             </div>
 
                             <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -47,8 +49,6 @@
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
                                                         colspan="1" style="width: 141px;">Screens</th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                        colspan="1" style="width: 141px;">Price</th>
-                                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
                                                         colspan="1" style="width: 132px;">Actions
                                                     </th>
                                                 </tr>
@@ -57,17 +57,31 @@
 
                                             <tbody>
                                                 @foreach ($theatres as $theatre)
-                                                    <tr role="row" class="odd">
+                                                    <tr id='row-{{ $theatre->theatre_id }}' role="row" class="odd">
                                                         <td tabindex="0" class="sorting_1">{{ $theatre->name }}</td>
                                                         <td>{{ $theatre->location }}</td>
                                                         <td>{{ $theatre->screens }}</td>
-                                                        <td> 45 QR </td>
-                                                        <td><a href="{{ $theatre->theatre_id }}#"
-                                                                class="btn btn-sm btn-info">
-                                                                <i class='bx bx-edit-alt'></i></a>
-                                                            <a href="/theatres/delete/{{ $theatre->theatre_id }}"
-                                                                class="btn btn-sm btn-danger">
-                                                                <i class='bx bx-x'></i></a>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div>
+                                                                    <a href="/theatres/{{ $theatre->theatre_id }}/edit"
+                                                                        class="btn btn-sm btn-info">
+                                                                        <i class='bx bx-edit-alt'></i></a>
+                                                                </div>
+                                                                <div class="ml-1">
+                                                                    <button type="submit" id="{{ $theatre->theatre_id }}"
+                                                                        table="theatres"
+                                                                        class="btn btn-sm btn-danger sa-params">
+                                                                        <i class='bx bx-x'></i></button>
+                                                                </div>
+                                                                {{-- <form class="ml-1"
+                                                                    action="/theatres/{{ $theatre->theatre_id }}"
+                                                                    method="Post">
+                                                                    @csrf
+                                                                    <input name="_method" type="hidden" value="DELETE">
+                                                                    
+                                                                </form> --}}
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -86,26 +100,14 @@
     </div>
     <!-- end page title -->
 
+    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-2">
+        <div class="p-3">
+            <p>By passing a parameter, you can execute something else for "Cancel".</p>
+            <button type="button" class="btn btn-primary waves-effect waves-light" id="sa-params">Click me</button>
+        </div>
+    </div> --}}
 
-
-    <!-- Required datatable js -->
-    <script src="/assets/backend/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <!-- Buttons examples -->
-    <script src="/assets/backend/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-    <script src="/assets/backend/libs/jszip/jszip.min.js"></script>
-    <script src="/assets/backend/libs/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/assets/backend/libs/pdfmake/build/vfs_fonts.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Responsive examples -->
-    <script src="/assets/backend/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
-    <!-- Datatable init js -->
-    <script src="/assets/backend/js/pages/datatables.init.js"></script>
+    @include('backend.layouts.datatableFooter')
 
 
 @endsection

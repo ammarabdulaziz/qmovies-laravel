@@ -25,4 +25,10 @@
 <script src="/assets/backend/libs/simplebar/simplebar.min.js"></script>
 <script src="/assets/backend/libs/node-waves/waves.min.js"></script>
 
+<!-- form wizard -->
+<script src="/assets/backend/libs/jquery-steps/build/jquery.steps.min.js"></script>
+
+<!-- form wizard init -->
+<script src="/assets/backend/js/pages/form-wizard.init.js"></script>
+
 <script src="/assets/backend/js/app.js"></script>

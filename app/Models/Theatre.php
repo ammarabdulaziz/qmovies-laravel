@@ -10,4 +10,5 @@ class Theatre extends Model
     use HasFactory;
 
     protected $table = 'theatres';
+    protected $fillable = array('name', 'location');
 }

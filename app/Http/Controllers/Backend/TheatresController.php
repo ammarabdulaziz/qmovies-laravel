@@ -43,79 +43,10 @@ class TheatresController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['name' => 'required', 'location' => 'required']);
+        Theatre::create($request->all());
 
-        // dd($request->outer_group[0]);
-
-        $rules = [
-            'outer_group.theatre_name' => 'required',
-        ];
-
-        $messages = array(
-            'outer_group.theatre_name' => 'The field is required.',
-        );
-
-        $attributes = [
-            'outer_group.theatre_name' => 'theatre name',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages, $attributes);
-
-        // $request->validate([
-        //     // 'outer_group.theatre_name' => 'required',
-        //     // 'outer_group.location' => 'required',
-        //     // 'custom' => [
-        //     //     'outer_group.theatre_name' => ['required' => 'Its required'],
-        //     //     'outer_group.location' => ['required' => 'Its required']
-        //     // ]
-        // ]);
-
-
-        dd();
-
-
-        $theatre = new Theatre(); // fillable
-        $theatre->name = $request->outer_group[0]['theatre_name'];
-        $theatre->location = $request->outer_group[0]['location'];
-        $theatre->screens = count($request->outer_group[0]['inner_group']);
-
-        $theatre->save();
-        $theatre_id = $theatre->id;
-
-        foreach ($request->outer_group[0]['inner_group'] as $screenArr) {
-            $screen = new Screens();
-            $screen->theatre_id = $theatre_id;
-            $screen->name = $screenArr['screen_name'];
-            $screen->total_capacity = $screenArr['total_capacity'];
-
-            $screen->save();
-            $screen_id = $screen->id;
-
-            $screenSeatings = new ScreenSeatings();
-            $screenSeatings->screen_id = $screen_id;
-            $screenSeatings->type = 'Mezzanine';
-            $screenSeatings->capacity = $screenArr['mez_capacity'];
-            $screenSeatings->price = $screenArr['mez_price'];
-
-            $screenSeatings->save();
-
-            $screenSeatings = new ScreenSeatings();
-            $screenSeatings->screen_id = $screen_id;
-            $screenSeatings->type = 'Balcony';
-            $screenSeatings->capacity = $screenArr['balc_capacity'];
-            $screenSeatings->price = $screenArr['balc_price'];
-
-            $screenSeatings->save();
-        }
-        // dd($theatre_id);
-
-        // DB::table('theatres')->insert(
-        //     [
-        //         'name' => $request->outer_group[0]['theatre_name'],
-        //         'location' => $request->outer_group[0]['location']
-        //     ]
-        // );
-        $theatres = Theatre::all();
-        return view('backend/theatres/index', ['theatres' => $theatres]);
+        return redirect('/theatres');
     }
 
     /**
@@ -137,10 +68,7 @@ class TheatresController extends Controller
      */
     public function edit($id)
     {
-        $theatre = DB::table('theatres')
-            ->select('theatre_id', 'name', 'duration', 'journer')
-            ->where('theatre_id', $id)
-            ->get();
+        $theatre = Theatre::where('theatre_id', $id)->first();
 
         return view('backend/theatres/edit', array('theatre' => $theatre));
     }
@@ -154,18 +82,9 @@ class TheatresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $result = DB::table('theatres')
-            ->where('theatre_id', $id)
-            ->update([
-                'name' => $request->name,
-                'duration' => $request->duration,
-                'journer' => $request->journer,
-                'description' => 'hello',
-                'plot' => 'hello',
-                'rating' => 'hello',
-            ]);
-
-        return redirect('/');
+        $request->validate(['name' => 'required', 'location' => 'required']);
+        Theatre::where('theatre_id', $id)->update($request->except(['_token', '_method']));
+        return redirect('/theatres');
     }
 
     /**
@@ -176,7 +95,9 @@ class TheatresController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('theatres')->where('theatre_id', $id)->delete();
-        return redirect('/theatres');
+        Theatre::where('theatre_id', $id)->delete();
+        return response()->json([
+            'message' => 'Data deleted successfully!'
+        ]);
     }
 }

@@ -1,12 +1,67 @@
-<form action="/update/{{ $movie[0]->movie_id }}" method="post">
-    @csrf
-    {{-- {{ print_r($movie[0]) }}
-    {{ exit() }} --}}
-    <label for="name">Movie name:</label><br>
-    <input type="text" name="name" value="{{ $movie[0]->name }}"><br>
-    <label for="journer">Journer:</label><br>
-    <input type="text" name="journer" value="{{ $movie[0]->journer }}"><br>
-    <label for="duration">Duration:</label><br>
-    <input type="text" name="duration" value="{{ $movie[0]->duration }}"><br>
-    <input type="submit" value="Submit">
-</form>
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+@extends('backend/layouts.app')
+
+@section('content')
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Theatres</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/theatres">Theatres</a></li>
+                        <li class="breadcrumb-item active">Edit</li>
+                    </ol>
+                </div>
+            </div>
+            {{-- {{ print_r($theatre) }}
+            {{ exit() }} --}}
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-4">EDIT</h4>
+                            <form action="/theatres/{{ $theatre->theatre_id }}" method="post">
+                                @csrf
+                                {{ method_field('PUT') }}
+                                <div class="form-group">
+                                    <label>Name :</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Enter theatre name"
+                                        value="{{ $theatre->name }}">
+                                    @error('name')
+                                        <small class="text-danger pt-1">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Location :</label>
+                                    <input type="text" name="location" class="form-control"
+                                        placeholder="Enter theatre location" value="{{ $theatre->location }}">
+                                    @error('location')
+                                        <small class="text-danger pt-1">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-dark pl-4 pr-4">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <!-- form repeater js -->
+    <script src="/assets/backend/libs/jquery.repeater/jquery.repeater.min.js"></script>
+    <script src="/assets/backend/js/pages/form-repeater.int.js"></script>
+
+@endsection
+
+
+<!-- end main content-->

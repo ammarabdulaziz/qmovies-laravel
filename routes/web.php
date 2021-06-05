@@ -23,12 +23,14 @@ use App\Http\Controllers\Backend\DashboardController;
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
-Route::get('/theatres', [TheatresController::class, 'index']);
-Route::get('/theatres/add', [TheatresController::class, 'create']);
-Route::post('/theatres/add', [TheatresController::class, 'store']);
-Route::get('/theatres/edit/{id}', [TheatresController::class, 'edit']);
-Route::post('/theatres/update/{id}', [TheatresController::class, 'update']);
-Route::get('/theatres/delete/{id}', [TheatresController::class, 'destroy']);
+Route::resource('theatres', TheatresController::class);
+
+// Route::get('/theatres', [TheatresController::class, 'index']);
+// Route::get('/theatres/add', [TheatresController::class, 'create']); // add
+// Route::post('/theatres/add', [TheatresController::class, 'store']); // create
+// Route::get('/theatres/edit/{id}', [TheatresController::class, 'edit']);
+// Route::post('/theatres/update/{id}', [TheatresController::class, 'update']);
+// Route::get('/theatres/delete/{id}', [TheatresController::class, 'destroy']);
 
 Route::get('/movies', [MoviesController::class, 'index']);
 Route::get('/movies/add', [MoviesController::class, 'create']);
