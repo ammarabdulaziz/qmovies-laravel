@@ -32,3 +32,4 @@
 <script src="/assets/backend/js/pages/form-wizard.init.js"></script>
 
 <script src="/assets/backend/js/app.js"></script>
+<script src="/assets/backend/js/index.js"></script>

@@ -1,0 +1,8 @@
+.custom-hide {
+    display: none !important;
+}
+
+.custom-show {
+    display: flex !important;
+    align-items: center;
+}

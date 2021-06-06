@@ -8,8 +8,9 @@
                 confirmButtonColor: "#556ee6",
             });
         }),
-            t(".sa-params").click(function (e) {
-                e.preventDefault();
+            t("tbody:last-child").on("click", "button.sa-params", function (e) {
+                // e.preventDefault();
+                console.log("called");
                 let token = $("meta[name='csrf-token']").attr("content");
                 let id = $(this).attr("id");
                 let table = $(this).attr("table");
@@ -32,8 +33,7 @@
                             dataType: "json",
                             data: { id, _method: "DELETE", _token: token },
                             success: function (response) {
-                                console.log(response);
-                                $(`tr#row-${id}`).hide();
+                                $(`tr#${table}-${id}`).hide();
                                 Swal.fire({
                                     title: "Deleted!",
                                     text: "This data has been deleted.",

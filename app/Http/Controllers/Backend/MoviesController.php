@@ -15,7 +15,7 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        // $movies = Theatre::all();
+        // $movies = Theatre:s:all();
         // dd($movies);
         $movies = DB::table('movies')->get();
         return view('backend/movies/index', ['movies' => $movies]);

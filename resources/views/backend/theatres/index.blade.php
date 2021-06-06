@@ -57,10 +57,10 @@
 
                                             <tbody>
                                                 @foreach ($theatres as $theatre)
-                                                    <tr id='row-{{ $theatre->theatre_id }}' role="row" class="odd">
+                                                    <tr id='theatres-{{ $theatre->theatre_id }}' role="row" class="odd">
                                                         <td tabindex="0" class="sorting_1">{{ $theatre->name }}</td>
                                                         <td>{{ $theatre->location }}</td>
-                                                        <td>{{ $theatre->screens }}</td>
+                                                        <td>{{ count($theatre->screens) }}</td>
                                                         <td>
                                                             <div class="d-flex">
                                                                 <div>
@@ -74,13 +74,15 @@
                                                                         class="btn btn-sm btn-danger sa-params">
                                                                         <i class='bx bx-x'></i></button>
                                                                 </div>
-                                                                {{-- <form class="ml-1"
-                                                                    action="/theatres/{{ $theatre->theatre_id }}"
-                                                                    method="Post">
-                                                                    @csrf
-                                                                    <input name="_method" type="hidden" value="DELETE">
-                                                                    
-                                                                </form> --}}
+                                                                <div class="ml-1">
+                                                                    <div>
+                                                                        <button href="/screens/{{ $theatre->theatre_id }}"
+                                                                            add-screen="/screens/create?id={{ $theatre->theatre_id }}"
+                                                                            class="btn btn-sm btn-warning screen-modal"
+                                                                            data-toggle="modal"
+                                                                            data-target=".bs-example-modal-xl">Screens</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -99,13 +101,7 @@
         </div>
     </div>
     <!-- end page title -->
-
-    {{-- <div class="col-xl-3 col-lg-4 col-sm-6 mb-2">
-        <div class="p-3">
-            <p>By passing a parameter, you can execute something else for "Cancel".</p>
-            <button type="button" class="btn btn-primary waves-effect waves-light" id="sa-params">Click me</button>
-        </div>
-    </div> --}}
+    @include('backend.theatres.includes.modal')
 
     @include('backend.layouts.datatableFooter')
 

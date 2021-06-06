@@ -8,7 +8,7 @@
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="/assets/backend/images/favicon.ico">
+    <link rel="shortcut icon" href="/assets/backend/images/new.ico" sizes="16x16">
 
 
     <script src="/assets/backend/libs/jquery/jquery.min.js"></script>
@@ -19,5 +19,6 @@
     <link href="/assets/backend/css/icons.min.css" rel="stylesheet" type="text/css" />
     <!-- App Css-->
     <link href="/assets/backend/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+    <link href="/assets/backend/css/index.css" rel="stylesheet" type="text/css" />
 
 </head>

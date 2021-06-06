@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TheatresController;
+use App\Http\Controllers\Backend\ScreensController;
 use App\Http\Controllers\Backend\MoviesController;
 use App\Http\Controllers\Backend\DashboardController;
 
@@ -24,6 +25,8 @@ use App\Http\Controllers\Backend\DashboardController;
 Route::get('/dashboard', [DashboardController::class, 'index']);
 
 Route::resource('theatres', TheatresController::class);
+Route::resource('screens', ScreensController::class);
+// Route::get('screen/{id}', [TheatresController::class, 'getScreen']);
 
 // Route::get('/theatres', [TheatresController::class, 'index']);
 // Route::get('/theatres/add', [TheatresController::class, 'create']); // add

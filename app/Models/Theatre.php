@@ -10,5 +10,11 @@ class Theatre extends Model
     use HasFactory;
 
     protected $table = 'theatres';
+    protected $primaryKey = 'theatre_id';
     protected $fillable = array('name', 'location');
+
+    public function screens()
+    {
+        return $this->hasMany(Screens::class, 'theatre_id');
+    }
 }

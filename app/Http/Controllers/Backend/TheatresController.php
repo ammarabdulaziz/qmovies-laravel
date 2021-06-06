@@ -19,10 +19,8 @@ class TheatresController extends Controller
      */
     public function index()
     {
-        // dd($theatres);
-        // $theatres = DB::table('theatres')->get();
-        $theatres = Theatre::all();
-        return view('backend.theatres.index', ['theatres' => $theatres]); //compact
+        $theatres = Theatre::with('screens')->get();
+        return view('backend.theatres.index', compact('theatres'));
     }
 
     /**
@@ -84,6 +82,7 @@ class TheatresController extends Controller
     {
         $request->validate(['name' => 'required', 'location' => 'required']);
         Theatre::where('theatre_id', $id)->update($request->except(['_token', '_method']));
+
         return redirect('/theatres');
     }
 
