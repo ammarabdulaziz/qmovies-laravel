@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Movies;
 
 class MoviesController extends Controller
 {
@@ -15,10 +16,8 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        // $movies = Theatre:s:all();
-        // dd($movies);
-        $movies = DB::table('movies')->get();
-        return view('backend/movies/index', ['movies' => $movies]);
+        $movies = Movies::all();
+        return view('backend/movies/index', compact('movies'));
     }
 
     /**
@@ -28,7 +27,7 @@ class MoviesController extends Controller
      */
     public function create()
     {
-        return view('backend/movies/create');
+        return view('backend.movies.create');
     }
 
     /**
@@ -39,17 +38,17 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('movies')->insert(
-            [
-                'name' => $request->name,
-                'duration' => $request->duration,
-                'journer' => $request->journer,
-                'description' => 'hello',
-                'plot' => 'hello',
-                'rating' => 'hello',
-            ]
-        );
-        return view('backend/movies/create');
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'plot' => 'required',
+            'rating' => 'required',
+            'duration' => 'required',
+            'journer' => 'required'
+        ]);
+
+        Movies::create($request->all());
+        return redirect('/movies');
     }
 
     /**
@@ -71,12 +70,9 @@ class MoviesController extends Controller
      */
     public function edit($id)
     {
-        $movie = DB::table('movies')
-            ->select('movie_id', 'name', 'duration', 'journer')
-            ->where('movie_id', $id)
-            ->get();
+        $movie = Movies::where('movie_id', $id)->first();
 
-        return view('backend/movies/edit', array('movie' => $movie));
+        return view('backend.movies.edit', compact('movie'));
     }
 
     /**
@@ -88,18 +84,17 @@ class MoviesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $result = DB::table('movies')
-            ->where('movie_id', $id)
-            ->update([
-                'name' => $request->name,
-                'duration' => $request->duration,
-                'journer' => $request->journer,
-                'description' => 'hello',
-                'plot' => 'hello',
-                'rating' => 'hello',
-            ]);
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'plot' => 'required',
+            'rating' => 'required',
+            'duration' => 'required',
+            'journer' => 'required'
+        ]);
+        Movies::where('movie_id', $id)->update($request->except(['_token', '_method']));
 
-        return redirect('/');
+        return redirect('/movies');
     }
 
     /**
@@ -110,7 +105,9 @@ class MoviesController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('movies')->where('movie_id', $id)->delete();
-        return redirect('/');
+        Movies::where('movie_id', $id)->delete();
+        return response()->json([
+            'message' => 'Data deleted successfully!'
+        ]);
     }
 }

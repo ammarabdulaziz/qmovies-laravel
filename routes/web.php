@@ -26,18 +26,4 @@ Route::get('/dashboard', [DashboardController::class, 'index']);
 
 Route::resource('theatres', TheatresController::class);
 Route::resource('screens', ScreensController::class);
-// Route::get('screen/{id}', [TheatresController::class, 'getScreen']);
-
-// Route::get('/theatres', [TheatresController::class, 'index']);
-// Route::get('/theatres/add', [TheatresController::class, 'create']); // add
-// Route::post('/theatres/add', [TheatresController::class, 'store']); // create
-// Route::get('/theatres/edit/{id}', [TheatresController::class, 'edit']);
-// Route::post('/theatres/update/{id}', [TheatresController::class, 'update']);
-// Route::get('/theatres/delete/{id}', [TheatresController::class, 'destroy']);
-
-Route::get('/movies', [MoviesController::class, 'index']);
-Route::get('/movies/add', [MoviesController::class, 'create']);
-Route::post('/movies/add', [MoviesController::class, 'store']);
-Route::get('/movies/edit/{id}', [MoviesController::class, 'edit']);
-Route::post('/movies/update/{id}', [MoviesController::class, 'update']);
-Route::get('/movies/delete/{id}', [MoviesController::class, 'destroy']);
+Route::resource('movies', MoviesController::class);

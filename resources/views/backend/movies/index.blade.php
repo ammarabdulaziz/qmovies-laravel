@@ -1,10 +1,11 @@
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-@extends('backend/layouts.app')
+@extends('backend.layouts.app')
 
 @section('content')
 
+    @include('backend.layouts.datatableHead')
     <!-- start page title -->
     <div class="row">
         <div class="col-12">
@@ -26,7 +27,7 @@
 
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h4 class="card-title">LIST</h4>
-                                <a href="/movies/add" class="btn btn-success">ADD</a>
+                                <a href="/movies/create" class="btn btn-success">ADD</a>
                             </div>
 
                             <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
@@ -38,22 +39,25 @@
                                             aria-describedby="datatable_info">
                                             <thead>
                                                 <tr role="row">
-                                                    <th class="sorting_asc" tabindex="0" aria-controls="datatable"
-                                                        rowspan="1" colspan="1" style="width: 290px;" aria-sort="ascending"
-                                                        aria-label="Name: activate to sort column descending">Name</th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                        colspan="1" style="width: 192px;"
-                                                        aria-label="Position: activate to sort column ascending">Journer
+                                                        colspan="1" style="width: 150px;">Name
                                                     </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                        colspan="1" style="width: 141px;"
-                                                        aria-label="Office: activate to sort column ascending">Rating</th>
+                                                        colspan="1" style="width: 20px;">Rating
+                                                    </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                        colspan="1" style="width: 68px;"
-                                                        aria-label="Age: activate to sort column ascending">Duration</th>
+                                                        colspan="1" style="width: 20px;">Journer
+                                                    </th>
                                                     <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
-                                                        colspan="1" style="width: 132px;"
-                                                        aria-label="Start date: activate to sort column ascending">Actions
+                                                        colspan="1" style="width: 20px;">Duration
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                        colspan="1" style="width: 150px;">Description
+                                                    </th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                        colspan="1" style="width: 150px;">Plot</th>
+                                                    <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1"
+                                                        colspan="1" style="width: 132px;">Actions
                                                     </th>
                                                 </tr>
                                             </thead>
@@ -61,16 +65,27 @@
 
                                             <tbody>
                                                 @foreach ($movies as $movie)
-                                                    <tr role="row" class="odd">
+                                                    <tr id='movies-{{ $movie->movie_id }}' role="row" class="odd">
                                                         <td tabindex="0" class="sorting_1">{{ $movie->name }}</td>
-                                                        <td>{{ $movie->journer }}</td>
                                                         <td>{{ $movie->rating }}</td>
+                                                        <td>{{ $movie->journer }}</td>
                                                         <td>{{ $movie->duration }}</td>
-                                                        <td><a href="{{ $movie->movie_id }}#" class="btn btn-sm btn-info">
-                                                                <i class='bx bx-edit-alt'></i></a>
-                                                            <a href="{{ $movie->movie_id }}#"
-                                                                class="btn btn-sm btn-danger">
-                                                                <i class='bx bx-x'></i></a>
+                                                        <td>{{ $movie->description }}</td>
+                                                        <td>{{ $movie->plot }}</td>
+                                                        <td>
+                                                            <div class="d-flex">
+                                                                <div>
+                                                                    <a href="/movies/{{ $movie->movie_id }}/edit"
+                                                                        class="btn btn-sm btn-info">
+                                                                        <i class='bx bx-edit-alt'></i></a>
+                                                                </div>
+                                                                <div class="ml-1">
+                                                                    <button type="submit" id="{{ $movie->movie_id }}"
+                                                                        table="movies"
+                                                                        class="btn btn-sm btn-danger sa-params">
+                                                                        <i class='bx bx-x'></i></button>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -88,27 +103,7 @@
         </div>
     </div>
     <!-- end page title -->
-
-
-
-    <!-- Required datatable js -->
-    <script src="/assets/backend/libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <!-- Buttons examples -->
-    <script src="/assets/backend/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
-    <script src="/assets/backend/libs/jszip/jszip.min.js"></script>
-    <script src="/assets/backend/libs/pdfmake/build/pdfmake.min.js"></script>
-    <script src="/assets/backend/libs/pdfmake/build/vfs_fonts.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Responsive examples -->
-    <script src="/assets/backend/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/backend/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
-
-    <!-- Datatable init js -->
-    <script src="/assets/backend/js/pages/datatables.init.js"></script>
+    @include('backend.layouts.datatableFooter')
 
 
 @endsection

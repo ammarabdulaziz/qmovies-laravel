@@ -68,7 +68,7 @@ class TheatresController extends Controller
     {
         $theatre = Theatre::where('theatre_id', $id)->first();
 
-        return view('backend/theatres/edit', array('theatre' => $theatre));
+        return view('backend/theatres/edit', compact('theatre'));
     }
 
     /**
